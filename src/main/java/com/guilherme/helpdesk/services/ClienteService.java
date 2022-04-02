@@ -1,6 +1,6 @@
 package com.guilherme.helpdesk.services;
 
-import com.guilherme.helpdesk.Pessoa;
+import com.guilherme.helpdesk.domain.Pessoa;
 import com.guilherme.helpdesk.domain.Cliente;
 import com.guilherme.helpdesk.domain.dtos.ClienteDTO;
 import com.guilherme.helpdesk.repository.PessoaRepository;
@@ -8,6 +8,7 @@ import com.guilherme.helpdesk.repository.ClienteRepository;
 import com.guilherme.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.guilherme.helpdesk.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClienteService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id){
         Optional<Cliente> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrato: "+id));
@@ -33,8 +37,9 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDto) {
         objDto.setId(null);
-        Cliente tecnico = new Cliente(objDto);
+        objDto.setSenha(encoder.encode(objDto.getSenha()));
         validaPorCpfEmail(objDto);
+        Cliente tecnico = new Cliente(objDto);
         return  repository.save(tecnico);
     }
 
@@ -59,7 +64,7 @@ public class ClienteService {
         if (obj.isPresent() && obj.get().getId() != objDto.getId()){
             throw new DataIntegrityViolationException("CPF já cadastrado no sistema");
         }
-        obj = pessoaRepository.findByEmail(objDto.getEmail());
+        Optional<Pessoa> obj2 = pessoaRepository.findByEmail(objDto.getEmail());
         if (obj.isPresent() && obj.get().getId() != objDto.getId()){
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
         }

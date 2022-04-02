@@ -1,6 +1,6 @@
 package com.guilherme.helpdesk.repository;
 
-import com.guilherme.helpdesk.Pessoa;
+import com.guilherme.helpdesk.domain.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

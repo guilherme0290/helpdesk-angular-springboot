@@ -1,6 +1,6 @@
 package com.guilherme.helpdesk.services;
 
-import com.guilherme.helpdesk.Pessoa;
+import com.guilherme.helpdesk.domain.Pessoa;
 import com.guilherme.helpdesk.domain.Tecnico;
 import com.guilherme.helpdesk.domain.dtos.TecnicoDTO;
 import com.guilherme.helpdesk.repository.PessoaRepository;
@@ -8,6 +8,7 @@ import com.guilherme.helpdesk.repository.TecnicoRepository;
 import com.guilherme.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.guilherme.helpdesk.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class TecnicoService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Tecnico findById(Integer id){
         Optional<Tecnico> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrato: "+id));
@@ -33,6 +37,7 @@ public class TecnicoService {
 
     public Tecnico create(TecnicoDTO objDto) {
         objDto.setId(null);
+        objDto.setSenha(encoder.encode(objDto.getSenha()));
         Tecnico tecnico = new Tecnico(objDto);
         validaPorCpfEmail(objDto);
         return  repository.save(tecnico);

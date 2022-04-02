@@ -1,4 +1,4 @@
-package com.guilherme.helpdesk;
+package com.guilherme.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.guilherme.helpdesk.domain.enums.Perfil;

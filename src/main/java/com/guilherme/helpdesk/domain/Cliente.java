@@ -1,7 +1,7 @@
 package com.guilherme.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.guilherme.helpdesk.Pessoa;
+import com.guilherme.helpdesk.domain.Pessoa;
 import com.guilherme.helpdesk.domain.dtos.ClienteDTO;
 import com.guilherme.helpdesk.domain.dtos.TecnicoDTO;
 import com.guilherme.helpdesk.domain.enums.Perfil;
