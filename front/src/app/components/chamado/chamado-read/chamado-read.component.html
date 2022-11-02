@@ -1,1 +1,98 @@
-<p>chamado-read works!</p>
+<div class="container mat-elevation-z8">
+    <h1 class="full-width">Visualizando Chamados</h1>
+    <img class="full-width" src="/assets/img/chamado.webp" alt="chamado-image">
+
+
+    <form class="form">
+        <mat-form-field  class="full-width" appearance="outline">
+            <mat-label>Titulo do chamado</mat-label>            
+            <input        
+                [disabled]="true"          
+                [(ngModel)]="chamado.titulo"
+                name="titulo"
+                required
+                matInput              
+                placeholder="Ex. trocar cabeça da barbica"               
+              >
+            
+        </mat-form-field>
+    </form>
+        <div class="status-prioridade">
+            <mat-form-field appearance="outline">
+                <mat-label>STATUS ({{retornaStatus(chamado.status)}})</mat-label>
+                <mat-select    
+                    [disabled]="true"                 
+                    required
+                    [(ngModel)]="chamado.status"
+                    name="status"
+                  >
+                    <mat-option value="0">ABERTO</mat-option>
+                    <mat-option value="1">EM ANDAMENTO</mat-option>
+                    <mat-option value="2">ENCERRADO</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>PRIORIDADE ({{retornaPrioridade(chamado.prioridade)}})</mat-label>
+                <mat-select 
+                    [disabled]="true"                     
+                    required
+                    [(ngModel)]="chamado.prioridade"
+                    name="prioridade"
+                >
+                <mat-option value="0">BAIXA</mat-option>
+                <mat-option value="1">MÉDIA</mat-option>
+                <mat-option value="2">ALTA</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>  
+
+        <div class="tecnico">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>{{chamado.nomeTecnico}}</mat-label>
+                <mat-select                     
+                    [disabled]="true" 
+                    [(ngModel)]="chamado.tecnico"
+                    name="tecnico"
+                >
+                <mat-option>{{chamado.nomeTecnico}} </mat-option>                
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="cliente">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>{{chamado.nomeCliente}}</mat-label>
+                <mat-select    
+                    [disabled]="true"                  
+                    [(ngModel)]="chamado.cliente"
+                    name="cliente"
+                >
+                <mat-option>{{chamado.nomeCliente}}</mat-option>                
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <form >
+            <mat-form-field class="full-width descricao" appearance="outline">
+                <mat-label>Deixe uma descrição</mat-label>
+                <textarea
+                    [disabled]="true" 
+                    class="observacoes"
+                    matInput
+                    placeholder="Ex trocar bateria de not queimada..."                    
+                    [(ngModel)]="chamado.observacoes"
+                    name="observacoes"
+                    >
+                </textarea>
+            </mat-form-field>
+        </form>
+
+        
+        
+        <button routerLink="../../" class="full-width mat-elevation-z4" mat-stroked-button color="warn">Retornar</button>
+
+        <p class="full-width">Desenvolvido por Guilherme Ferreira</p>
+   
+
+</div>
